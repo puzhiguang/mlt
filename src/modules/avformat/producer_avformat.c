@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "common.h"
+
 // MLT Header files
 #include <framework/mlt_producer.h>
 #include <framework/mlt_frame.h>
@@ -2038,11 +2040,12 @@ static void apply_properties( void *obj, mlt_properties properties, int flags )
 	for ( i = 0; i < count; i++ )
 	{
 		const char *opt_name = mlt_properties_get_name( properties, i );
-		const AVOption *opt = av_opt_find( obj, opt_name, NULL, flags, flags );
+		int search_flags = AV_OPT_SEARCH_CHILDREN;
+		const AVOption *opt = av_opt_find( obj, opt_name, NULL, flags, search_flags );
 		if ( opt_name && mlt_properties_get( properties, opt_name ) )
 		{
 			if ( opt )
-				av_opt_set( obj, opt_name, mlt_properties_get( properties, opt_name), 0 );
+				av_opt_set( obj, opt_name, mlt_properties_get( properties, opt_name), search_flags );
 		}
 	}
 }
@@ -2613,6 +2616,7 @@ static int producer_get_audio( mlt_frame frame, void **buffer, mlt_audio_format 
 		int ret	= 0;
 		int got_audio = 0;
 		AVPacket pkt;
+		mlt_channel_layout layout;
 
 		av_init_packet( &pkt );
 		
@@ -2706,9 +2710,11 @@ static int producer_get_audio( mlt_frame frame, void **buffer, mlt_audio_format 
 			*frequency = self->audio_codec[ index ]->sample_rate;
 			*format = pick_audio_format( self->audio_codec[ index ]->sample_fmt );
 			sizeof_sample = sample_bytes( self->audio_codec[ index ] );
+			layout = av_channel_layout_to_mlt( self->audio_codec[ index ]->channel_layout );
 		}
 		else if ( self->audio_index == INT_MAX )
 		{
+			layout = mlt_channel_independent;
 			for ( index = 0; index < index_max; index++ )
 				if ( self->audio_codec[ index ] )
 				{
@@ -2718,6 +2724,7 @@ static int producer_get_audio( mlt_frame frame, void **buffer, mlt_audio_format 
 					break;
 				}
 		}
+		mlt_properties_set( MLT_FRAME_PROPERTIES(frame), "channel_layout", mlt_channel_layout_name( layout ) );
 
 		// Allocate and set the frame's audio buffer
 		int size = mlt_audio_format_size( *format, *samples, *channels );

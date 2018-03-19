@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "common.h"
+
 // mlt Header files
 #include <framework/mlt_consumer.h>
 #include <framework/mlt_frame.h>
@@ -69,7 +71,7 @@
 #define AUDIO_ENCODE_BUFFER_SIZE (48000 * 2 * MAX_AUDIO_STREAMS)
 #define AUDIO_BUFFER_SIZE (1024 * 42)
 #define VIDEO_BUFFER_SIZE (8192 * 8192)
-#define IMAGE_ALIGN (1)
+#define IMAGE_ALIGN (4)
 
 //
 // This structure should be extended and made globally available in mlt
@@ -442,16 +444,17 @@ static void apply_properties( void *obj, mlt_properties properties, int flags )
 	for ( i = 0; i < count; i++ )
 	{
 		const char *opt_name = mlt_properties_get_name( properties, i );
-		const AVOption *opt = av_opt_find( obj, opt_name, NULL, flags, flags );
+		int search_flags = AV_OPT_SEARCH_CHILDREN;
+		const AVOption *opt = av_opt_find( obj, opt_name, NULL, flags, search_flags );
 
 		// If option not found, see if it was prefixed with a or v (-vb)
 		if ( !opt && (
 			( opt_name[0] == 'v' && ( flags & AV_OPT_FLAG_VIDEO_PARAM ) ) ||
 			( opt_name[0] == 'a' && ( flags & AV_OPT_FLAG_AUDIO_PARAM ) ) ) )
-			opt = av_opt_find( obj, ++opt_name, NULL, flags, flags );
+			opt = av_opt_find( obj, ++opt_name, NULL, flags, search_flags );
 		// Apply option if found
-		if ( opt )
-			av_opt_set( obj, opt_name, mlt_properties_get_value( properties, i), 0 );
+		if ( opt &&  strcmp( opt_name, "channel_layout" ) )
+			av_opt_set( obj, opt_name, mlt_properties_get_value( properties, i), search_flags );
 	}
 }
 
@@ -566,7 +569,7 @@ static uint8_t* interleaved_to_planar( int samples, int channels, uint8_t* audio
 /** Add an audio output stream
 */
 
-static AVStream *add_audio_stream( mlt_consumer consumer, AVFormatContext *oc, AVCodec *codec, int channels )
+static AVStream *add_audio_stream( mlt_consumer consumer, AVFormatContext *oc, AVCodec *codec, int channels, int64_t channel_layout )
 {
 	// Get the properties
 	mlt_properties properties = MLT_CONSUMER_PROPERTIES( consumer );
@@ -585,7 +588,7 @@ static AVStream *add_audio_stream( mlt_consumer consumer, AVFormatContext *oc, A
 		c->codec_id = codec->id;
 		c->codec_type = AVMEDIA_TYPE_AUDIO;
 		c->sample_fmt = pick_sample_fmt( properties, codec );
-		c->channel_layout = av_get_default_channel_layout( channels );
+		c->channel_layout = channel_layout;
 
 #if 0 // disabled until some audio codecs are multi-threaded
 		// Setup multi-threading
@@ -595,7 +598,7 @@ static AVStream *add_audio_stream( mlt_consumer consumer, AVFormatContext *oc, A
 		if ( thread_count >= 0 )
 			c->thread_count = thread_count;
 #endif
-	
+
 		if (oc->oformat->flags & AVFMT_GLOBALHEADER) 
 			c->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 		
@@ -1531,13 +1534,20 @@ static void *consumer_thread( void *arg )
 			{
 				is_multi = 1;
 				enc_ctx->total_channels += j;
-				enc_ctx->audio_st[i] = add_audio_stream( consumer, enc_ctx->oc, audio_codec, j );
+				enc_ctx->audio_st[i] = add_audio_stream( consumer, enc_ctx->oc, audio_codec, j, av_get_default_channel_layout( j ) );
 			}
 		}
 		// single track
 		if ( !is_multi )
 		{
-			enc_ctx->audio_st[0] = add_audio_stream( consumer, enc_ctx->oc, audio_codec, enc_ctx->channels );
+			mlt_channel_layout layout = mlt_channel_layout_id( mlt_properties_get( properties, "channel_layout" ) );
+			if( layout == mlt_channel_auto ||
+				layout == mlt_channel_independent ||
+				mlt_channel_layout_channels( layout ) != enc_ctx->channels )
+			{
+				layout = mlt_channel_layout_default( enc_ctx->channels );
+			}
+			enc_ctx->audio_st[0] = add_audio_stream( consumer, enc_ctx->oc, audio_codec, enc_ctx->channels, mlt_to_av_channel_layout( layout ) );
 			enc_ctx->total_channels = enc_ctx->channels;
 		}
 	}
@@ -1620,7 +1630,7 @@ static void *consumer_thread( void *arg )
 				goto on_fatal_error;
 			}
 		}
-	
+
 	}
 
 	// Last check - need at least one stream
@@ -1631,8 +1641,14 @@ static void *consumer_thread( void *arg )
 	}
 
 	// Allocate picture
-	if ( enc_ctx->video_st )
+	if ( enc_ctx->video_st ) {
 		converted_avframe = alloc_picture( enc_ctx->video_st->codec->pix_fmt, width, height );
+		if ( !converted_avframe ) {
+			mlt_log_error( MLT_CONSUMER_SERVICE( consumer ), "failed to allocate video AVFrame\n", filename );
+			mlt_events_fire( properties, "consumer-fatal-error", NULL );
+			goto on_fatal_error;
+		}
+	}
 
 	// Allocate audio AVFrame
 	if ( enc_ctx->audio_st[0] )
