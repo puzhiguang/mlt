@@ -33,6 +33,5 @@ make.inc
 src/examples/play
 *.dot
 *.rej
-externals/
 build/
 .vscode/
