@@ -32,15 +32,14 @@
         {
             "label": "build_play_demo_win",
             "type": "shell",
-            "command": "D:/msys64/msys2_shell.cmd -mingw64",//path to mingw shell cmd
+            "command": "g++",//path to mingw shell cmd，PATH enviroment variant should include mingw bin folder where all your tools locate
             "args": [
-                "g++",
                 "${workspaceFolder}/src/examples/play.cpp",
                 "-o",
                 "${workspaceFolder}/build/debug/Play.exe",
-                "-L${workspaceFolder}/build/win/lib","-L${workspaceFolder}/build/win/lib","-I${workspaceFolder}/build/win/include",
-                "-I${workspaceFolder}/build/win/include/mlt","-I${workspaceFolder}/build/win/include","-I${workspaceFolder}/build/win/include/mlt++",
-                "-I${workspaceFolder}/build/win/include","-I${workspaceFolder}/build/win/include/mlt",
+                "-L${workspaceFolder}/build/win/lib",
+                "-I${workspaceFolder}/build/win/include/mlt","-I${workspaceFolder}/build/win/include/mlt++",
+                "-I${workspaceFolder}/build/win/include",
                 "-lmlt++","-lmlt","-D_REENTRANT","-v","-g","-Wall"
             ],
             "group": "build",
