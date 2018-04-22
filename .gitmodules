@@ -4,3 +4,6 @@
 [submodule "externals/sdl2"]
 	path = externals/sdl2
 	url = git@github.com:spurious/SDL-mirror.git
+[submodule "externals/frei0r"]
+	path = externals/frei0r
+	url = git@github.com:dyne/frei0r.git
