@@ -7,3 +7,9 @@
 [submodule "externals/frei0r"]
 	path = externals/frei0r
 	url = git@github.com:dyne/frei0r.git
+[submodule "externals/dlfcn-win32"]
+	path = externals/dlfcn-win32
+	url = git@github.com:gandalfliang/dlfcn-win32.git
+[submodule "externals/pthread-win32"]
+	path = externals/pthread-win32
+	url = git@github.com:gandalfliang/pthread-win32.git
