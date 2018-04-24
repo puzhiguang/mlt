@@ -2,6 +2,10 @@ project(MLTFramework)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+if(WIN32)
+	set(CMAKE_C_FLAGS "-std=c99 ${CMAKE_C_FLAGS}")
+	set(CMAKE_CXX_FLAGS "-std=c99 ${CMAKE_CXX_FLAGS}")
+endif()
 
 set(EXTERNAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/)
 if(WIN32)
@@ -20,8 +24,11 @@ endif()
 
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.c")
+if(WIN32)
+    file(GLOB WIN32SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
+endif()
 
-add_library(libmlt ${HEADERS} ${SRCS})
+add_library(libmlt SHARED ${HEADERS} ${SRCS} ${WIN32SRCS})
 set_target_properties(libmlt PROPERTIES FOLDER core)
     
 if(WIN32)
