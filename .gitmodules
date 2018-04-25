@@ -13,3 +13,6 @@
 [submodule "externals/pthread-win32"]
 	path = externals/pthread-win32
 	url = git@github.com:gandalfliang/pthread-win32.git
+[submodule "externals/libiconv"]
+	path = externals/libiconv
+	url = git@github.com:gandalfliang/libiconv.git
