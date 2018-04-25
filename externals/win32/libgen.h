@@ -4,7 +4,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#if defined(_MSC_VER)
+#if defined(_WIN32)
 	#define basename(x) ((x))
 #endif
 #ifdef __cplusplus

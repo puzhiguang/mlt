@@ -11,15 +11,16 @@ set(EXTERNAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/)
 if(WIN32)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}../../../externals/win32/
                         ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/pthread-win32/
-                        ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/dlfcn-win32/)
+                        ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/dlfcn-win32/
+                        ${CMAKE_CURRENT_SOURCE_DIR}../../../externals/libiconv/source/include)
 endif()
 
 #pthread lib
 if(WIN32)
     include_external_msproject(libpthreadwin32 ${EXTERNAL_LIBS}pthread-win32/pthread.2017.vcxproj)
     include_external_msproject(libdlfcn ${EXTERNAL_LIBS}dlfcn-win32/visual-studio/17/dl/dl.vcxproj)
-    set_target_properties(libpthreadwin32 PROPERTIES FOLDER external)
-    set_target_properties(libdlfcn PROPERTIES FOLDER external)
+    include_external_msproject(libiconv ${EXTERNAL_LIBS}libiconv/MSVC15/libiconv_dll/libiconv_dll.vcxproj)    
+    set_target_properties(libpthreadwin32 libdlfcn libiconv PROPERTIES FOLDER external)
 endif()
 
 file(GLOB HEADERS "*.h")
@@ -32,6 +33,5 @@ add_library(libmlt SHARED ${HEADERS} ${SRCS} ${WIN32SRCS})
 set_target_properties(libmlt PROPERTIES FOLDER core)
     
 if(WIN32)
-    add_dependencies(libmlt libpthreadwin32)
-    add_dependencies(libmlt libdlfcn)
+    add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
 endif()
