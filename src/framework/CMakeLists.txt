@@ -3,17 +3,17 @@ if(WIN32)
                         ${EXTERNAL_LIBS}/pthread-win32/
                         ${EXTERNAL_LIBS}/dlfcn-win32/
                         ${EXTERNAL_LIBS}/libiconv/source/include)
-endif()
+endif(WIN32)
 
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.c")
 if(WIN32)
     file(GLOB WIN32SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
-endif()
+endif(WIN32)
 
-add_library(libmlt SHARED ${HEADERS} ${SRCS} ${WIN32SRCS})
+add_library(libmlt STATIC ${HEADERS} ${SRCS} ${WIN32SRCS})
 set_target_properties(libmlt PROPERTIES FOLDER core)
     
 if(WIN32)
     add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
-endif()
+endif(WIN32)

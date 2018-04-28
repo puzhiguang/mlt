@@ -1,10 +1,16 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 if(WIN32)
     include_directories(${EXTERNAL_LIBS}/pthread-win32/)
-endif()
+endif(WIN32)
+
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.cpp")
 
-add_library(libmlt++ SHARED ${HEADERS} ${SRCS})
-add_dependencies(libmlt++ libmlt libpthreadwin32)
+add_library(libmlt++ STATIC ${HEADERS} ${SRCS})
+if(WIN32)
+    add_definitions(-DMLTPP_EXPORTS)
+endif(WIN32)
+
+add_dependencies(libmlt++ libmlt)
+target_link_libraries(libmlt++ libmlt)
 set_target_properties(libmlt++ PROPERTIES FOLDER core)

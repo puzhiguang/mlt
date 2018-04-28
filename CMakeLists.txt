@@ -3,12 +3,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/)
 project(MltFramework)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-if(WIN32)
-	set(CMAKE_C_FLAGS "-std=c99 ${CMAKE_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "-std=c99 ${CMAKE_CXX_FLAGS}")
-endif()
-
 set(EXTERNAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/externals)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
     include_external_msproject(libpthreadwin32 ${EXTERNAL_LIBS}/pthread-win32/pthread.2017.vcxproj)
