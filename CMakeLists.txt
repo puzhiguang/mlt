@@ -18,3 +18,4 @@ endif()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/examples)
