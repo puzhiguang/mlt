@@ -17,3 +17,7 @@ set_target_properties(libmlt PROPERTIES FOLDER core)
 if(WIN32)
     add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
 endif(WIN32)
+
+if(APPLE)
+    add_definitions(-DRELOCATABLE)
+endif(APPLE)

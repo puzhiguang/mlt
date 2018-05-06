@@ -3,6 +3,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/)
 project(MltFramework)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(amd64)|(AMD64)")
+    set (X86 TRUE)
+else()
+    set (X86 FALSE)
+endif(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(amd64)|(AMD64)")
+
 set(EXTERNAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/externals)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -16,6 +22,10 @@ if(WIN32)
     set_target_properties(libpthreadwin32 libdlfcn libiconv PROPERTIES FOLDER external)
 endif()
 
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg)
+set_target_properties(libavutil PROPERTIES FOLDER externals/ffmpeg/)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/examples)
+
