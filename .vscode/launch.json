@@ -50,7 +50,7 @@
             "environment": [],
             "externalConsole": true,
             "MIMode": "lldb",
-            "preLaunchTask": "build_play_demo"
+            "preLaunchTask": "build_play_demo_osx"
         }
     ]
 }
