@@ -23,7 +23,8 @@ if(WIN32)
 endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
-set_target_properties(libavutil PROPERTIES FOLDER externals/ffmpeg/)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavformat)
+set_target_properties(libavutil libavformat PROPERTIES FOLDER externals/ffmpeg/)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
