@@ -24,7 +24,8 @@ endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavformat)
-set_target_properties(libavutil libavformat PROPERTIES FOLDER externals/ffmpeg/)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavcodec)
+set_target_properties(libavutil libavcodec libavformat PROPERTIES FOLDER externals/ffmpeg/)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
