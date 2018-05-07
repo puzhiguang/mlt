@@ -8,7 +8,7 @@ file(GLOB SRCS "*.cpp")
 
 add_library(libmlt++ STATIC ${HEADERS} ${SRCS})
 if(WIN32)
-    add_definitions(-DMLTPP_EXPORTS)
+    add_definitions(/D"MLTPP_EXPORTS")
 endif(WIN32)
 
 add_dependencies(libmlt++ libmlt)
