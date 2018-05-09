@@ -1,4 +1,8 @@
 include_directories(${EXTERNAL_LIBS}/ffmpeg)
+if(WIN32)
+    include_directories(${EXTERNAL_LIBS}/win32
+                        ${EXTERNAL_LIBS}/ffmpeg/compat/atomics/win32)
+endif(WIN32)
 
 file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libavutil/*.c)
 file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavutil/*.h ${EXTERNAL_LIBS}/ffmpeg/*.h)
