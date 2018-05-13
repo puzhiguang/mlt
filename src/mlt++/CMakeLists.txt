@@ -13,4 +13,3 @@ endif(WIN32)
 
 add_dependencies(libmlt++ libmlt)
 target_link_libraries(libmlt++ libmlt)
-set_target_properties(libmlt++ PROPERTIES FOLDER core)

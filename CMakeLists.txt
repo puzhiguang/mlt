@@ -19,7 +19,7 @@ if(WIN32)
     include_external_msproject(libpthreadwin32 ${EXTERNAL_LIBS}/pthread-win32/pthread.2017.vcxproj)
     include_external_msproject(libdlfcn ${EXTERNAL_LIBS}/dlfcn-win32/visual-studio/17/dl/dl.vcxproj)
     include_external_msproject(libiconv ${EXTERNAL_LIBS}/libiconv/MSVC15/libiconv_dll/libiconv_dll.vcxproj)    
-    set_target_properties(libpthreadwin32 libdlfcn libiconv PROPERTIES FOLDER external)
+    set_target_properties(libpthreadwin32 libdlfcn libiconv PROPERTIES FOLDER externals)
 endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
@@ -34,3 +34,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/examples)
 
+set_target_properties(libmlt libmlt++ PROPERTIES FOLDER mlt)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/modules/avformat)
+set_target_properties(libmltavformat PROPERTIES FOLDER mlt/modules)

@@ -1,0 +1,12 @@
+include_directories(${CMAKE_SOURCE_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}
+                    ${EXTERNAL_LIBS}/ffmpeg)
+
+file(GLOB HEADERS "*.h")                    
+file(GLOB SRCS "*.c")
+
+list(REMOVE_ITEM SRCS ${CMAKE_CURRENT_SOURCE_DIR}/vdpau.c)
+
+add_library(libmltavformat SHARED ${HEADERS} ${SRCS})
+target_link_libraries(libmltavformat libmlt libmlt++ libavformat libavfilter libavutil libswresample libswscale libavcodec)
+set_target_properties(libmltavformat PROPERTIES OUTPUT_NAME "mltavformat")

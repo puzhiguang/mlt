@@ -12,7 +12,6 @@ if(WIN32)
 endif(WIN32)
 
 add_library(libmlt STATIC ${HEADERS} ${SRCS} ${WIN32SRCS})
-set_target_properties(libmlt PROPERTIES FOLDER core)
     
 if(WIN32)
     add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
