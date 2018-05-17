@@ -14,7 +14,8 @@ endif(WIN32)
 add_library(libmlt STATIC ${HEADERS} ${SRCS} ${WIN32SRCS})
     
 if(WIN32)
-    add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
+	add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
+	target_link_libraries(libmlt libpthreadwin32 libdlfcn libiconv)
 endif(WIN32)
 
 if(APPLE)
