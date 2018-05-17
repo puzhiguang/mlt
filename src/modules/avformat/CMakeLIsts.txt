@@ -1,6 +1,10 @@
 include_directories(${CMAKE_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}
                     ${EXTERNAL_LIBS}/ffmpeg)
+if(WIN32)
+    include_directories(${EXTERNAL_LIBS}/pthread-win32/
+                        ${EXTERNAL_LIBS}/win32/)
+endif(WIN32)
 
 file(GLOB HEADERS "*.h")                    
 file(GLOB SRCS "*.c")

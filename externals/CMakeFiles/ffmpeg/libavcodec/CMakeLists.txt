@@ -1,4 +1,7 @@
 include_directories(${EXTERNAL_LIBS}/ffmpeg)
+if(WIN32)
+    include_directories(${EXTERNAL_LIBS}/ffmpeg/compat/atomics/win32)
+endif(WIN32)
 
 file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavcodec/*.h ${EXTERNAL_LIBS}/ffmpeg/*.h)
 list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aandcttab.c
@@ -208,11 +211,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aptx.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aptx.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aptx.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aptx.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/png.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngdsp.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/png.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/assdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ass.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/assenc.c
@@ -355,7 +353,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dvdata.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dvenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dv.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dvdata.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxa.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxtory.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxv.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/eac3_data.c
@@ -383,8 +380,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/escape130.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/evrcdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/acelp_vectors.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/lsp.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/exr.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/exrdsp.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ffv1dec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ffv1.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ffv1enc.c
@@ -401,17 +396,11 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/flacenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/flacdata.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/flac.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/vorbis_data.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/flashsv.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/flashsvenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/flashsv2enc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/flashsv.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/flicvideo.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/fmvc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/4xm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/fraps.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/frwu.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/g2meet.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/elsdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/g723_1dec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/g723_1.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/acelp_vectors.c
@@ -473,7 +462,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/h264_refs.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/h264_sei.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/h264_slice.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/h264data.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolboxenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/hapdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/hap.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/hevcdec.c
@@ -606,7 +594,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/xvididct.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mpl2dec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ass.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mss3.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/mscc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/msmpeg4dec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/msmpeg4.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/msmpeg4data.c
@@ -682,11 +669,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/cga_data.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pixlet.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/textdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ass.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/png.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngdsp.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/png.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/pngenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pnmdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pnm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pnmenc.c
@@ -738,7 +720,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/elbg.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dpcm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/roqaudioenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/rpza.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/rscc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/rv10.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/rv10enc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/rv10.c
@@ -756,7 +737,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/s302m.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/s302menc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/sanm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/scpr.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/screenpresso.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dpcm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/sgidec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/sgienc.c
@@ -790,7 +770,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/sonic.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/speedhq.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/simple_idct.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/sp5xdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/mscc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/srtdec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ass.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/htmlsubtitles.c
@@ -840,8 +819,8 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/targa.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/targaenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/rle.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/targa_y216dec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/tdsc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/tiertexseqv.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/tiff.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/lzw.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/faxcompr.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/tiff_data.c
@@ -860,8 +839,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/truemotion1.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/truemotion2.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/truemotion2rt.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/truespeech.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/tscc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/msrledec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/tscc2.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/tta.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ttadata.c
@@ -1025,11 +1002,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/ylc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/yop.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/yuv4dec.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/yuv4enc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/zerocodec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/lcldec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/lclenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/zmbv.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/zmbvenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pcm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pcm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pcm-bluray.c
@@ -1190,12 +1162,18 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/adpcm.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/adpcm_data.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/adpcmenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/adpcm_data.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/videotoolbox.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_h264.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_h264.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_hevc.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_hevc.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_mpeg2.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_mpeg2.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_vc1.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_vc1.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_vp9.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/dxva2_vp9.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mpeg4audio.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mpegaudiodata.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mpeg4audio.c
@@ -1219,26 +1197,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/dca.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/tak.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/mpeg4audio.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/elbg.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxdec.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxenc.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/audiotoolboxenc.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/latm_parser.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aac_parser.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/aac_ac3_parser.c
@@ -1343,10 +1301,12 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/trace_headers_bsf.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/vp9_raw_reorder_bsf.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/vp9_superframe_bsf.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/vp9_superframe_split_bsf.c
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/file_open.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pthread.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pthread_slice.c
 ${EXTERNAL_LIBS}/ffmpeg/libavcodec/pthread_frame.c
-${EXTERNAL_LIBS}/ffmpeg/libavcodec/frame_thread_encoder.c)
+${EXTERNAL_LIBS}/ffmpeg/libavcodec/frame_thread_encoder.c
+)
 
 
 add_definitions(-DHAVE_AV_CONFIG_H)
