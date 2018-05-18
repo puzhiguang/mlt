@@ -1310,5 +1310,6 @@ ${EXTERNAL_LIBS}/ffmpeg/libavcodec/frame_thread_encoder.c
 
 
 add_definitions(-DHAVE_AV_CONFIG_H)
-add_library(libavcodec STATIC ${SRCS} ${HEADERS})
+add_library(libavcodec SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavcodec PROPERTIES OUTPUT_NAME "avcodec")
+target_link_libraries(libavcodec libavutil)

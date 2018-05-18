@@ -46,5 +46,5 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavfilter/af_bs2b.c
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
-add_library(libavfilter STATIC ${SRCS} ${HEADERS} ${ASMS})
+add_library(libavfilter SHARED ${SRCS} ${HEADERS} ${ASMS})
 set_target_properties(libavfilter PROPERTIES OUTPUT_NAME "avfilter")

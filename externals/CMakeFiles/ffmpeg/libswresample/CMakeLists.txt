@@ -10,5 +10,5 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/noise_shaping_data.c
 list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/soxr_resample.c)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
-add_library(libswresample STATIC ${SRCS} ${HEADERS})
+add_library(libswresample SHARED ${SRCS} ${HEADERS})
 set_target_properties(libswresample PROPERTIES OUTPUT_NAME "swresample")

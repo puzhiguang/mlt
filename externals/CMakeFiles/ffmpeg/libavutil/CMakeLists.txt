@@ -38,5 +38,5 @@ list(REMOVE_ITEM HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_cuda.h
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
-add_library(libavutil STATIC ${SRCS} ${HEADERS} ${ASMS})
+add_library(libavutil SHARED ${SRCS} ${HEADERS} ${ASMS})
 set_target_properties(libavutil PROPERTIES OUTPUT_NAME "avutil")

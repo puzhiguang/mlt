@@ -29,5 +29,5 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavformat/muxer_list.c)
 
 
 add_definitions(-DHAVE_AV_CONFIG_H)
-add_library(libavformat STATIC ${SRCS} ${HEADERS})
+add_library(libavformat SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavformat PROPERTIES OUTPUT_NAME "avformat")
