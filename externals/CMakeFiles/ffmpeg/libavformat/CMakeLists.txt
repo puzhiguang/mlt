@@ -32,5 +32,10 @@ add_definitions(-DHAVE_AV_CONFIG_H)
 add_library(libavformat SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavformat PROPERTIES OUTPUT_NAME "avformat")
 
-find_package(BZip2)
 target_link_libraries(libavformat libavutil ${BZIP2_LIBRARIES})
+
+if(APPLE)
+    find_package(BZip2)
+    target_link_libraries(libavformat ${BZIP2_LIBRARIES})
+endif(APPLE)
+    
