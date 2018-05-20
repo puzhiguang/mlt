@@ -35,8 +35,15 @@ endif(APPLE)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
-add_library(libavutil SHARED ${SRCS} ${HEADERS} ${ASMS})
+if(X86)
+    file(GLOB X86FILES ${EXTERNAL_LIBS}/ffmpeg/libavutil/x86/*.c)
+    source_group("x86" FILES ${X86FILES})
+    include_directories(${EXTERNAL_LIBS}/ffmpeg/libavutil/x86)
+endif(X86)
+
+add_library(libavutil SHARED ${SRCS} ${HEADERS} ${X86FILES})
 set_target_properties(libavutil PROPERTIES OUTPUT_NAME "avutil")
+
 
 if(APPLE)
     find_library(COREVIDEO_LIB CoreVideo)
