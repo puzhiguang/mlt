@@ -4,7 +4,6 @@ file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavdevice/*.h ${EXTERNAL_LIBS}/ffmpe
 
 if(WIN32)
     file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libavdevice/file_open.c
-                    ${EXTERNAL_LIBS}/ffmpeg/libavdevice/reverse.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavdevice/dshow_crossbar.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavdevice/dshow.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavdevice/dshow_enummediatypes.c
@@ -16,6 +15,11 @@ if(WIN32)
                     ${EXTERNAL_LIBS}/ffmpeg/libavdevice/lavfi.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavdevice/vfwcap.c)
 endif(WIN32)
+
+if(APPLE)
+    file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libavdevice/avfoundation.c
+                    ${EXTERNAL_LIBS}/ffmpeg/libavdevice/lavfi.c)
+endif(APPLE)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 

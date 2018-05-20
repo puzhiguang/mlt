@@ -29,14 +29,16 @@ list(REMOVE_ITEM HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_cuda.h
                         ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_videotoolbox.h
                         ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_vdpau.h)
 
-#if(X86)
-#    include_directories(${EXTERNAL_LIBS}/ffmpeg/libavutil/x86)
-#    file(GLOB SRCSX86 ${EXTERNAL_LIBS}/ffmpeg/libavutil/X86/*.c)
-#    file(GLOB ASMS ${EXTERNAL_LIBS}/ffmpeg/libavutil/X86/*.asm)
-#    add_definitions(-DARCH_X86)
-#endif(X86)
+if(APPLE)
+    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_videotoolbox.c)
+endif(APPLE)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
 add_library(libavutil SHARED ${SRCS} ${HEADERS} ${ASMS})
 set_target_properties(libavutil PROPERTIES OUTPUT_NAME "avutil")
+
+if(APPLE)
+    find_library(COREVIDEO_LIB CoreVideo)
+    target_link_libraries(libavutil ${COREVIDEO_LIB})
+endif(APPLE)
