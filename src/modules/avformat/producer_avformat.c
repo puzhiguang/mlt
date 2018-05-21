@@ -2770,7 +2770,7 @@ static int producer_get_audio( mlt_frame frame, void **buffer, mlt_audio_format 
 				memcpy( *buffer, src, size * *channels * sizeof_sample );
 				// supply the remaining requested samples as silence
 				if ( *samples > self->audio_used[ index ] )
-					memset( (char*)*buffer + size * *channels * sizeof_sample, 0, ( *samples - self->audio_used[ index ] ) * *channels * sizeof_sample );
+					memset( *buffer + size * *channels * sizeof_sample, 0, ( *samples - self->audio_used[ index ] ) * *channels * sizeof_sample );
 				// reposition the samples within audio_buffer
 				self->audio_used[ index ] -= size;
 				memmove( src, src + size * *channels * sizeof_sample, self->audio_used[ index ] * *channels * sizeof_sample );
