@@ -30,11 +30,9 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavfilter/af_bs2b.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_unsharp_opencl.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_procamp_vaapi.c                    
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_program_opencl.c                    
-                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_scale_vaapi.c                    
-                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/scale.c                    
+                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_scale_vaapi.c                   
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_hwupload_cuda.c
-                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_overlay_qsv.c                    
-                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/framesync.c
+                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_overlay_qsv.c 
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_misc_vaapi.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/qsvvpp.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_deinterlace_vaapi.c
@@ -42,10 +40,23 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavfilter/af_bs2b.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/colorspacedsp_yuv2yuv_template.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/opencl.c
                     ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vaapi_vpp.c
+                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/af_resample.c
+                    ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_pp.c
                     )
+
+if(APPLE)
+    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_coreimage.m)
+endif(APPLE)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
-add_library(libavfilter SHARED ${SRCS} ${HEADERS} ${ASMS})
+add_library(libavfilter SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavfilter PROPERTIES OUTPUT_NAME "avfilter")
-target_link_libraries(libavfilter libavutil libavcodec libavformat libswresample)
+target_link_libraries(libavfilter libavutil libavcodec libavformat libswresample libswscale)
+
+if(APPLE)
+    find_library(COREIMAGE_LIB CoreImage)
+    find_library(APPKIT_LIB AppKit)
+    find_package(OpenGL REQUIRED)
+    target_link_libraries(libavfilter ${COREIMAGE_LIB} ${APPKIT_LIB} ${OPENGL_LIBRARIES})
+endif(APPLE)

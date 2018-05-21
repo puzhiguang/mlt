@@ -27,15 +27,20 @@ list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavformat/demuxer_list.c)
 list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavformat/protocol_list.c)
 list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libavformat/muxer_list.c)
 
+if(APPLE)
+    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavformat/tls_securetransport.c
+                        ${EXTERNAL_LIBS}/ffmpeg/libavformat/unix.c)
+endif()
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 add_library(libavformat SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavformat PROPERTIES OUTPUT_NAME "avformat")
 
-target_link_libraries(libavformat libavutil ${BZIP2_LIBRARIES})
+target_link_libraries(libavformat libavutil libavcodec ${BZIP2_LIBRARIES})
 
 if(APPLE)
     find_package(BZip2)
-    target_link_libraries(libavformat ${BZIP2_LIBRARIES})
+    find_library(SECURITY_LIB Security)
+    target_link_libraries(libavformat ${BZIP2_LIBRARIES} ${SECURITY_LIB})
 endif(APPLE)
     

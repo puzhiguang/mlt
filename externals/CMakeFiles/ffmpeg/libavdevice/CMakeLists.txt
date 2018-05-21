@@ -25,3 +25,4 @@ add_definitions(-DHAVE_AV_CONFIG_H)
 
 add_library(libavdevice SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavdevice PROPERTIES OUTPUT_NAME "avdevice")
+target_link_libraries(libavdevice libavutil libavfilter)
