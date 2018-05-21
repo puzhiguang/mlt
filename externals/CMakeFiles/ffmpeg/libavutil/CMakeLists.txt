@@ -48,6 +48,9 @@ add_definitions(-DHAVE_AV_CONFIG_H)
 add_library(libavutil SHARED ${SRCS} ${HEADERS} ${X86FILES})
 set_target_properties(libavutil PROPERTIES OUTPUT_NAME "avutil")
 
+if(WIN32)
+    target_compile_options(libavutil PRIVATE -nologo -Z7 -W3 -wd4018 -wd4146 -wd4244 -wd4305 -wd4554 -O2   -Oy- -utf-8)
+endif(WIN32)
 
 if(APPLE)
     find_library(COREVIDEO_LIB CoreVideo)
