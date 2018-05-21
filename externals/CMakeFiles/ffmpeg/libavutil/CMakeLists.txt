@@ -29,6 +29,10 @@ list(REMOVE_ITEM HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_cuda.h
                         ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_videotoolbox.h
                         ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_vdpau.h)
 
+if(WIN32)
+	list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_d3d11va.c
+					${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_dxva2.c)
+endif(WIN32)
 if(APPLE)
     list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavutil/hwcontext_videotoolbox.c)
 endif(APPLE)
