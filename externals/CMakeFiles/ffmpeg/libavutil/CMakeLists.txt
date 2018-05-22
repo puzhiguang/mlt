@@ -4,6 +4,11 @@ if(WIN32)
                         ${EXTERNAL_LIBS}/ffmpeg/compat/atomics/win32)
 endif(WIN32)
 
+execute_process(COMMAND cd ${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/Files/
+             make print target=libavutil OUTPUT_VARIABLE result)
+message(STATUS ${result})
+
+
 if(CMAKE_C_FLAGS_DEBUG MATCHES "/RTC1")
    string(REPLACE "/RTC1" " " CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 endif()

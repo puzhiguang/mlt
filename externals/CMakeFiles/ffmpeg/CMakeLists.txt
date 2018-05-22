@@ -1,0 +1,8 @@
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libswresample)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavformat)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavcodec)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libswscale)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavfilter)
+add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavdevice)
+set_target_properties(libavutil libavcodec libavformat libswscale libswresample libavfilter libavdevice PROPERTIES FOLDER externals/ffmpeg/)
