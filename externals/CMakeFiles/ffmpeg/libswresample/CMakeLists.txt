@@ -1,13 +1,16 @@
 include_directories(${EXTERNAL_LIBS}/ffmpeg)
 
-file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/*.c)
-file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libswresample/*.h)
+set(target "libswresample")
+GENCMake(${target})
 
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/dither_template.c)
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/rematrix_template.c)
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/resample_template.c)
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/noise_shaping_data.c)
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswresample/soxr_resample.c)
+include(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/Files/${target}.cmake)
+
+file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/${target}/*.h)
+
+foreach(src ${${target}_SRCS})
+    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+endforeach(src )
+
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 add_library(libswresample SHARED ${SRCS} ${HEADERS})

@@ -1,10 +1,15 @@
 include_directories(${EXTERNAL_LIBS}/ffmpeg)
 
-file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libswscale/*.c)
-file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libswscale/*.h)
+set(target "libswscale")
+GENCMake(${target})
 
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswscale/bayer_template.c)
-list(REMOVE_ITEM SRCS ${EXTERNAL_LIBS}/ffmpeg/libswscale/rgb2rgb_template.c)
+include(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/Files/${target}.cmake)
+
+foreach(src ${${target}_SRCS})
+    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+endforeach(src )
+
+file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libswscale/*.h)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 add_library(libswscale SHARED ${SRCS} ${HEADERS})

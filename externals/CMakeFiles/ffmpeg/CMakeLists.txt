@@ -1,3 +1,13 @@
+macro(GENCMake target)
+    execute_process(COMMAND make print target=${target} -C ${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/Files/ RESULT_VARIABLE result)
+    message(STATUS Getting ${target} source file result:${result})
+endmacro(GENCMake target)
+
+
+if(CMAKE_C_FLAGS_DEBUG MATCHES "/RTC1")
+   string(REPLACE "/RTC1" " " CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+endif()
+
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libswresample)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavformat)
@@ -6,3 +16,14 @@ add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libswscale)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavfilter)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavdevice)
 set_target_properties(libavutil libavcodec libavformat libswscale libswresample libavfilter libavdevice PROPERTIES FOLDER externals/ffmpeg/)
+
+if(WIN32)
+    set(COMPILE_OPT -nologo -Z7 -W3 -wd4018 -wd4146 -wd4244 -wd4305 -wd4554 -O2 -Oy- -utf-8)
+    target_compile_options(libavutil PRIVATE ${COMPILE_OPT})
+    target_compile_options(libswresample PRIVATE ${COMPILE_OPT})
+    target_compile_options(libavformat PRIVATE ${COMPILE_OPT})
+    target_compile_options(libavcodec PRIVATE ${COMPILE_OPT})
+    target_compile_options(libswscale PRIVATE ${COMPILE_OPT})
+    target_compile_options(libavfilter PRIVATE ${COMPILE_OPT})
+    target_compile_options(libavdevice PRIVATE ${COMPILE_OPT})
+endif(WIN32)
