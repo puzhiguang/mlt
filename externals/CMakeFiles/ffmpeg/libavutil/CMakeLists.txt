@@ -4,6 +4,10 @@ if(WIN32)
                         ${EXTERNAL_LIBS}/ffmpeg/compat/atomics/win32)
 endif(WIN32)
 
+if(CMAKE_C_FLAGS_DEBUG MATCHES "/RTC1")
+   string(REPLACE "/RTC1" " " CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+endif()
+
 file(GLOB SRCS ${EXTERNAL_LIBS}/ffmpeg/libavutil/*.c)
 file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/libavutil/*.h ${EXTERNAL_LIBS}/ffmpeg/*.h)
 
