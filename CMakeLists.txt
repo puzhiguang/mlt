@@ -17,7 +17,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
     add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/win32)
-    set_target_properties(libpthreadwin32 libdlfcn libiconv PROPERTIES FOLDER externals)
+    add_subdirectory(${EXTERNAL_LIBS}/dlfcn-win32)
+    set_target_properties(libpthreadwin32 dl libiconv PROPERTIES FOLDER externals)
 endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/)

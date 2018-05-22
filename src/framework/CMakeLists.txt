@@ -8,14 +8,14 @@ endif(WIN32)
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.c")
 if(WIN32)
-    file(GLOB WIN32SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
+    list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
 endif(WIN32)
 
-add_library(libmlt SHARED ${HEADERS} ${SRCS} ${WIN32SRCS})
+add_library(libmlt SHARED ${HEADERS} ${SRCS})
     
 if(WIN32)
-	add_dependencies(libmlt libpthreadwin32 libdlfcn libiconv)
-	target_link_libraries(libmlt libpthreadwin32 libdlfcn libiconv)
+	add_dependencies(libmlt libpthreadwin32 dl libiconv)
+	target_link_libraries(libmlt libpthreadwin32 dl libiconv)
 endif(WIN32)
 
 if(APPLE)
