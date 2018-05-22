@@ -8,7 +8,9 @@ include(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/Files/${target}.cmake)
 file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/${target}/*.h)
 
 foreach(src ${${target}_SRCS})
-    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+    if(EXISTS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+        list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+    endif()
 endforeach(src )
 
 
