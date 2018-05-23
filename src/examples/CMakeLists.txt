@@ -10,4 +10,7 @@ file(GLOB SRCS "*.cpp")
 
 add_executable(play_demo ${SRCS})
 add_dependencies(play_demo libmlt++)
-target_link_libraries(play_demo libmlt++ libmlt libpthreadwin32 dl libiconv)
+target_link_libraries(play_demo libmlt++)
+if(WIN32)
+    target_link_libraries(play_demo libpthreadwin32 dl libiconv)
+endif(WIN32)
