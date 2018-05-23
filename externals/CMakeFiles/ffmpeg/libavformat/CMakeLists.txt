@@ -18,6 +18,11 @@ set_target_properties(libavformat PROPERTIES OUTPUT_NAME "avformat")
 
 target_link_libraries(libavformat libavutil libavcodec ${BZIP2_LIBRARIES})
 
+if(WIN32)
+    GEN_DEF_COMMAND(${target} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+    SET_TARGET_PROPERTIES(${target} PROPERTIES LINK_FLAGS -DEF:${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+endif(WIN32)
+
 if(APPLE)
     find_package(BZip2)
     find_library(SECURITY_LIB Security)

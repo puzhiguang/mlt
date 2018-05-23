@@ -28,6 +28,11 @@ set_target_properties(libavcodec PROPERTIES OUTPUT_NAME "avcodec")
 
 target_link_libraries(libavcodec libavutil libswresample)
 
+if(WIN32)
+    GEN_DEF_COMMAND(${target} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+    SET_TARGET_PROPERTIES(${target} PROPERTIES LINK_FLAGS -DEF:${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+endif(WIN32)
+
 if(APPLE)
     find_library(VIDEOTOOLBOX_LIB VideoToolbox)
     find_library(COREFOUNDATION_LIB CoreFoundation)

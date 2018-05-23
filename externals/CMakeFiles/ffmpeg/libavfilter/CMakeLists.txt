@@ -24,6 +24,11 @@ add_library(libavfilter SHARED ${SRCS} ${HEADERS})
 set_target_properties(libavfilter PROPERTIES OUTPUT_NAME "avfilter")
 target_link_libraries(libavfilter libavutil libavcodec libavformat libswresample libswscale)
 
+if(WIN32)
+    GEN_DEF_COMMAND(${target} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+    SET_TARGET_PROPERTIES(${target} PROPERTIES LINK_FLAGS -DEF:${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${target}.def)
+endif(WIN32)
+
 if(APPLE)
     find_library(COREIMAGE_LIB CoreImage)
     find_library(APPKIT_LIB AppKit)

@@ -3,6 +3,12 @@ macro(GENCMake target)
     message(STATUS Getting ${target} source file result:${result})
 endmacro(GENCMake target)
 
+macro(GEN_DEF_COMMAND target outdef)
+    add_custom_command(TARGET ${target} PRE_LINK COMMAND 
+                        sh ${EXTERNAL_LIBS}/ffmpeg/compat/windows/makedef ${EXTERNAL_LIBS}/ffmpeg/${target}/${target}.v *.obj > ${outdef}
+                        WORKING_DIRECTORY $(IntDir)
+                        COMMENT "Add .def file generation pre-link event")
+endmacro(GENDef target outdef)
 
 if(CMAKE_C_FLAGS_DEBUG MATCHES "/RTC1")
    string(REPLACE "/RTC1" " " CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
