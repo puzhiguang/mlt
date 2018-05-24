@@ -10,11 +10,14 @@ macro(GEN_DEF_COMMAND target outdef)
                         sh ${EXTERNAL_LIBS}/ffmpeg/compat/windows/makedef ${EXTERNAL_LIBS}/ffmpeg/${target}/${target}.v *.obj > ${outdef}
                         WORKING_DIRECTORY $(IntDir)
                         COMMENT "Add .def file generation pre-link event")
-endmacro(GENDef target outdef)
+endmacro(GEN_DEF_COMMAND target outdef)
 
 if(CMAKE_C_FLAGS_DEBUG MATCHES "/RTC1")
    string(REPLACE "/RTC1" " " CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 endif()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${MODULE_LIB_DEST_PATH})
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libavutil)
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/libswresample)
