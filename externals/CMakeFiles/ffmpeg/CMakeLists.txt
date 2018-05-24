@@ -5,6 +5,8 @@ endmacro(GENCMake target)
 
 macro(GEN_DEF_COMMAND target outdef)
     add_custom_command(TARGET ${target} PRE_LINK COMMAND 
+                        set EXTERN_PREFIX=_
+                        COMMAND
                         sh ${EXTERNAL_LIBS}/ffmpeg/compat/windows/makedef ${EXTERNAL_LIBS}/ffmpeg/${target}/${target}.v *.obj > ${outdef}
                         WORKING_DIRECTORY $(IntDir)
                         COMMENT "Add .def file generation pre-link event")
