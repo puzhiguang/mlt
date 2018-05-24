@@ -30,3 +30,5 @@ set_target_properties(libmlt libmlt++ PROPERTIES FOLDER mlt)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/modules/avformat)
 set_target_properties(libmltavformat PROPERTIES FOLDER mlt/modules)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/modules/)
