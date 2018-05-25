@@ -24,7 +24,7 @@ os.system('make')
 os.chdir(root)
 
 print("configure mlt framework, this should not be long")
-if not fakeOs "":
+if fakeOs != "":
     os.system('sh ./configure --target-arch=x86 --target-os='+fakeOs)
 else:
     os.system('sh ./configure --target-arch=x86')
