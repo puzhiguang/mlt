@@ -8,23 +8,27 @@ if(WIN32)
                         ${EXTERNAL_LIBS}/win32/)
 endif(WIN32)
 
-file(GLOB HEADERS "*.h")                    
-file(GLOB SRCS "*.c")
+set(target "avformat")
+GENModuleCMake(${target} CODECS=1 DEVICES=1 FILTERS=1 AVFILTER=1 SWRESAMPLE=1)
+
+include(${CMAKE_SOURCE_DIR}/cmake/${target}.tmp)
+
+file(GLOB HEADERS ${MODULE_PATH}/${target}/*.h)
+
+foreach(src ${${target}_SRCS})
+    list(APPEND SRCS ${MODULE_PATH}/${target}/${src})
+endforeach(src )
 
 if(WIN32)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 	list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../../win32/win32.c)
 endif(WIN32)
 
-list(REMOVE_ITEM SRCS ${CMAKE_CURRENT_SOURCE_DIR}/vdpau.c)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${MODULE_LIB_DEST_PATH})
-
 add_library(libmltavformat SHARED ${HEADERS} ${SRCS})
-target_compile_definitions(libmltavformat PRIVATE -DCODECS -DFILTERS -DAVFILTER -DSWRESAMPLE)
+
+target_compile_definitions(libmltavformat PRIVATE -DCODECS -DFILTERS -DAVFILTER -DSWRESAMPLE -DDEVICE)
 target_link_libraries(libmltavformat libmlt libmlt++ libavformat libavfilter libavutil libswresample libswscale libavcodec)
 set_target_properties(libmltavformat PROPERTIES OUTPUT_NAME "libmltavformat")
+
 if(WIN32)
 	target_link_libraries(libmltavformat libiconv)
 endif(WIN32)

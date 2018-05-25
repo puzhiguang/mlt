@@ -1,10 +1,22 @@
-macro(GENModuleCMake target)
-    execute_process(COMMAND make print -f ${CMAKE_SOURCE_DIR}/cmake/Makefile target=${target} -C ${MODULE_PATH}/${target} RESULT_VARIABLE result)
+#GENModuleCMake(target extraflags)
+macro(GENModuleCMake)
+    set(target ${ARGV0})
+    set(extras ${ARGN})
+    list(REMOVE_ITEM extras ${target})
+    execute_process(COMMAND make print -f ${CMAKE_SOURCE_DIR}/cmake/Makefile target=${target} -C ${MODULE_PATH}/${target} ${extras} RESULT_VARIABLE result)
     message(STATUS Getting ${target} module file result:${result})
-endmacro(GENModuleCMake target)
+endmacro(GENModuleCMake)
 
 set(MODULE_PATH ${CMAKE_SOURCE_DIR}/src/modules)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${MODULE_LIB_DEST_PATH})
+
+if(WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif(WIN32)
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/avformat)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/core)
 
-set_target_properties(libmltcore PROPERTIES FOLDER mlt/modules)
+set_target_properties(libmltavformat libmltcore PROPERTIES FOLDER mlt/modules)

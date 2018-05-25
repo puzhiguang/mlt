@@ -7,7 +7,6 @@ if(WIN32)
                         ${CMAKE_SOURCE_DIR}/src/win32/
                         ${EXTERNAL_LIBS}/win32/)
 	list(APPEND SRCS ${CMAKE_SOURCE_DIR}/src/win32/win32.c)
-	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif(WIN32)
 
 set(target "core")
@@ -20,10 +19,6 @@ file(GLOB HEADERS ${MODULE_PATH}/${target}/*.h)
 foreach(src ${${target}_SRCS})
     list(APPEND SRCS ${MODULE_PATH}/${target}/${src})
 endforeach(src )
-
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${MODULE_LIB_DEST_PATH})
 
 add_compile_options(-D_USE_MATH_DEFINES)
 add_library(libmltcore SHARED ${SRCS} ${HEADERS})
