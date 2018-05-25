@@ -3,8 +3,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src
 
 if(WIN32)
     include_directories(${EXTERNAL_LIBS}/pthread-win32/
+						${EXTERNAL_LIBS}/libiconv/source/include
                         ${CMAKE_SOURCE_DIR}/src/win32/
                         ${EXTERNAL_LIBS}/win32/)
+	list(APPEND SRCS ${CMAKE_SOURCE_DIR}/src/win32/win32.c)
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif(WIN32)
 
 set(target "core")
@@ -18,10 +21,15 @@ foreach(src ${${target}_SRCS})
     list(APPEND SRCS ${MODULE_PATH}/${target}/${src})
 endforeach(src )
 
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${MODULE_LIB_DEST_PATH})
+
 add_compile_options(-D_USE_MATH_DEFINES)
 add_library(libmltcore SHARED ${SRCS} ${HEADERS})
 set_target_properties(libmltcore PROPERTIES OUTPUT_NAME "libmltcore")
+target_link_libraries(libmltcore libmlt)
 
 if(WIN32)
-    target_link_libraries(libmltcore libpthreadwin32)
+    target_link_libraries(libmltcore libpthreadwin32 libiconv)
 endif(WIN32)

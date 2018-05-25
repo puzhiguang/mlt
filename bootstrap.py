@@ -12,22 +12,29 @@ print('fetching external libraries')
 os.system('git submodule update --init --recursive')
 
 os.chdir(root + '/externals/ffmpeg')
-
+fakeOs=''
 print("configure ffmpeg, may take a while")
 if(sys=='Windows'):
+    fakeOs="MinGW"
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc --toolchain=msvc')
 else:
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc')
 os.system('make')
 
-print("configure mlt framework, this should not be long")
-os.system('sh ./configure --target-arch=x86')
-
 os.chdir(root)
+
+print("configure mlt framework, this should not be long")
+if not fakeOs "":
+    os.system('sh ./configure --target-arch=x86 --target-os='+fakeOs)
+else:
+    os.system('sh ./configure --target-arch=x86')
+
 if not os.path.exists('build'):
-    os.mkdir('build',)
+    os.mkdir('build')
+
 cmakedir=root
 cmakegenerator=''
+
 if(sys=='Windows'):
     dest='build/win32'
     if not os.path.exists(dest):
