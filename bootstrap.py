@@ -20,6 +20,9 @@ else:
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc')
 os.system('make')
 
+print("configure mlt framework, this should not be long")
+os.system('sh ./configure --target-arch=x86')
+
 os.chdir(root)
 if not os.path.exists('build'):
     os.mkdir('build',)
