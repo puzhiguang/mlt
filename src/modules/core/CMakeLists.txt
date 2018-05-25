@@ -29,9 +29,8 @@ add_compile_options(-D_USE_MATH_DEFINES)
 add_library(libmltcore SHARED ${SRCS} ${HEADERS} ${SHARE_FILES})
 set_target_properties(libmltcore PROPERTIES OUTPUT_NAME "libmltcore")
 target_link_libraries(libmltcore libmlt)
-add_custom_command(TARGET libmltcore POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E make_directory ${MLT_SHARE_OUTPUT_DIR}/${target}
-                    COMMAND ${CMAKE_COMMAND} -E copy ${SHARE_FILES} ${MLT_SHARE_OUTPUT_DIR}/${target})
+ADD_FILES_OUTPUT_COMMAND(libmltcore ${target})
+
 if(WIN32)
     target_link_libraries(libmltcore libpthreadwin32 libiconv)
 endif(WIN32)

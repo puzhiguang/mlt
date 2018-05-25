@@ -22,6 +22,7 @@ if(WIN32)
 endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/)
+set(SDL_STATIC FALSE)
 add_subdirectory(${EXTERNAL_LIBS}/sdl2)
 set_target_properties(SDL2 PROPERTIES FOLDER externals)
 

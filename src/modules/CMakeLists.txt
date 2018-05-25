@@ -7,6 +7,12 @@ macro(GENModuleCMake)
     message(STATUS Getting ${target} module file result:${result})
 endmacro(GENModuleCMake)
 
+macro(ADD_FILES_OUTPUT_COMMAND target dest)
+    add_custom_command(TARGET ${target} POST_BUILD
+                        COMMAND ${CMAKE_COMMAND} -E make_directory ${MLT_SHARE_OUTPUT_DIR}/${dest}
+                        COMMAND ${CMAKE_COMMAND} -E copy ${SHARE_FILES} ${MLT_SHARE_OUTPUT_DIR}/${dest})
+endmacro(ADD_FILES_OUTPUT_COMMAND target)
+
 set(MODULE_PATH ${CMAKE_SOURCE_DIR}/src/modules)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${MODULE_LIB_DEST_PATH})
@@ -20,5 +26,6 @@ endif(WIN32)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/avformat)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/core)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/sdl2)
 
-set_target_properties(libmltavformat libmltcore PROPERTIES FOLDER mlt/modules)
+set_target_properties(libmltavformat libmltcore libmltsdl2 PROPERTIES FOLDER mlt/modules)
