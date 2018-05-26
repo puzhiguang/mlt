@@ -19,7 +19,6 @@ if(sys=='Windows'):
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc --toolchain=msvc')
 else:
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc')
-os.system('make')
 
 os.chdir(root)
 
@@ -41,7 +40,7 @@ if(sys=='Windows'):
         os.mkdir(dest)
     cmakedir+='/'+dest
     cmakegenerator='"Visual Studio 15 2017"'
-elif(sys=='MacOS'):
+elif(sys=='Darwin'):
     dest='build/mac'
     if not os.path.exists(dest): 
         os.mkdir(dest)
