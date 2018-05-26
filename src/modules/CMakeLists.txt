@@ -3,7 +3,10 @@ macro(GENModuleCMake)
     set(target ${ARGV0})
     set(extras ${ARGN})
     list(REMOVE_ITEM extras ${target})
+    #fake a config.mak file
+    file(WRITE ${MODULE_PATH}/${target}/config.mak "")
     execute_process(COMMAND make print -f ${CMAKE_SOURCE_DIR}/cmake/Makefile target=${target} -C ${MODULE_PATH}/${target} ${extras} RESULT_VARIABLE result)
+    file(REMOVE ${MODULE_PATH}/${target}/config.mak)
     message(STATUS Getting ${target} module file result:${result})
 endmacro(GENModuleCMake)
 
