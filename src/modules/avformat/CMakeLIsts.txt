@@ -18,16 +18,20 @@ file(GLOB HEADERS ${MODULE_PATH}/${target}/*.h)
 foreach(src ${${target}_SRCS})
     list(APPEND SRCS ${MODULE_PATH}/${target}/${src})
 endforeach(src )
+file(GLOB SHARE_FILES ${MODULE_PATH}/${target}/*.yml 
+                        ${MODULE_PATH}/${target}/blacklist.txt)
+source_group(share FILES ${SHARE_FILES})
 
 if(WIN32)
 	list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../../win32/win32.c)
 endif(WIN32)
 
-add_library(libmltavformat SHARED ${HEADERS} ${SRCS})
+add_library(libmltavformat SHARED ${HEADERS} ${SRCS} ${SHARE_FILES})
 
 target_compile_definitions(libmltavformat PRIVATE -DCODECS -DFILTERS -DAVFILTER -DSWRESAMPLE -DDEVICE)
 target_link_libraries(libmltavformat libmlt libmlt++ libavformat libavfilter libavutil libswresample libswscale libavcodec)
 set_target_properties(libmltavformat PROPERTIES OUTPUT_NAME "libmltavformat")
+ADD_FILES_OUTPUT_COMMAND(libmltavformat ${target})
 
 if(WIN32)
 	target_link_libraries(libmltavformat libiconv)
