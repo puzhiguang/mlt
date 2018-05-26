@@ -10,10 +10,10 @@ file(GLOB SRCS "*.c")
 if(WIN32)
     list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
 endif(WIN32)
-
+add_compile_options(-DUSE_MMX -DUSE_SSE -DUSE_SSE2 -O2)
 set(target "libmlt")
 add_library(libmlt SHARED ${HEADERS} ${SRCS})
-    
+
 if(WIN32)
 	add_dependencies(libmlt libpthreadwin32 dl libiconv)
     target_link_libraries(libmlt libpthreadwin32 dl libiconv)

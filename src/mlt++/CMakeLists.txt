@@ -7,6 +7,8 @@ endif(WIN32)
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.cpp")
 
+add_compile_options(-DUSE_MMX -DUSE_SSE -DUSE_SSE2 -O2)
+
 add_library(libmlt++ SHARED ${HEADERS} ${SRCS})
 if(WIN32)
     add_definitions(/D"MLTPP_EXPORTS")

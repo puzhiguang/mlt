@@ -29,6 +29,8 @@ if(WIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif(WIN32)
 
+add_compile_options(-DUSE_MMX -DUSE_SSE -DUSE_SSE2 -O2)
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/avformat)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/core)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/sdl2)
