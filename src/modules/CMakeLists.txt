@@ -32,6 +32,7 @@ endif(WIN32)
 add_compile_options(-DUSE_SSE -DUSE_SSE2 -O2)
 if(!WIN32)#ignore mms in windows, temperaly
     add_compile_options(-DUSE_MMX)
+endif()
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/avformat)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/modules/core)

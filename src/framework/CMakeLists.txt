@@ -10,7 +10,7 @@ set(MLT_SHARE_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}/$
 file(GLOB HEADERS "*.h")
 file(GLOB SRCS "*.c")
 if(WIN32)
-    list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../../win32/win32.c)
+    list(APPEND SRCS ${CMAKE_CURRENT_SOURCE_DIR}../../win32/win32.c)
 endif(WIN32)
 
 #profiles 
