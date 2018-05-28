@@ -31,7 +31,7 @@
 #include <SDL.h>
 #include <sys/time.h>
 
-extern pthread_mutex_t mlt_sdl_mutex;
+DECLSPEC_PTHREAD_MUTEX extern pthread_mutex_t mlt_sdl_mutex;
 
 /** This classes definition.
 */

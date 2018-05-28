@@ -126,6 +126,12 @@ struct mlt_consumer_s
 	void *child; /**< \private the object of a subclass */
 };
 
+#ifdef _MSC_VER
+#define DECLSPEC_PTHREAD_MUTEX _declspec(dllimport)
+#else
+#define DECLSPEC_PTHREAD_MUTEX 
+#endif #_MSC_VER
+
 #define MLT_CONSUMER_SERVICE( consumer )	( &( consumer )->parent )
 #define MLT_CONSUMER_PROPERTIES( consumer )	MLT_SERVICE_PROPERTIES( MLT_CONSUMER_SERVICE( consumer ) )
 
