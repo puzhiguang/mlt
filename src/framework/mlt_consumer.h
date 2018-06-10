@@ -130,7 +130,7 @@ struct mlt_consumer_s
 #define DECLSPEC_PTHREAD_MUTEX _declspec(dllimport)
 #else
 #define DECLSPEC_PTHREAD_MUTEX 
-#endif #_MSC_VER
+#endif //_MSC_VER
 
 #define MLT_CONSUMER_SERVICE( consumer )	( &( consumer )->parent )
 #define MLT_CONSUMER_PROPERTIES( consumer )	MLT_SERVICE_PROPERTIES( MLT_CONSUMER_SERVICE( consumer ) )
