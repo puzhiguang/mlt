@@ -1237,7 +1237,7 @@ static int encode_audio(encode_ctx_t* ctx)
 
 							dest += current_channels * ctx->sample_bytes;
 							src += ctx->channels * ctx->sample_bytes;
-#endif _MSC_VER
+#endif //_MSC_VER
 						}
 					}
 				}
