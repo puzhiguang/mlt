@@ -10,13 +10,13 @@ file(GLOB HEADERS ${EXTERNAL_LIBS}/ffmpeg/${target}/*.h)
 foreach(src ${${target}_SRCS})
     if(EXISTS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
         list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+    else()
+        string(REPLACE ".c" ".m" mfile ${EXTERNAL_LIBS}/ffmpeg/${target}/${src})
+        if(EXISTS ${mfile})
+            list(APPEND SRCS ${mfile})
+        endif()
     endif()
 endforeach(src )
-
-
-if(APPLE)
-    list(APPEND SRCS ${EXTERNAL_LIBS}/ffmpeg/libavfilter/vf_coreimage.m)
-endif(APPLE)
 
 add_definitions(-DHAVE_AV_CONFIG_H)
 
