@@ -35,3 +35,4 @@ src/examples/play
 *.rej
 build/
 .vscode/
+*.d
