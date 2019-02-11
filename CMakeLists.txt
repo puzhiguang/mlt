@@ -29,9 +29,12 @@ if(WIN32)
 endif()
 
 add_subdirectory(${EXTERNAL_LIBS}/CMakeFiles/ffmpeg/)
+
 set(SDL_STATIC FALSE)
 add_subdirectory(${EXTERNAL_LIBS}/sdl2)
-set_target_properties(SDL2 PROPERTIES FOLDER externals)
+set_target_properties(SDL2 PROPERTIES FOLDER externals/sdl2)
+set_target_properties(SDL2main PROPERTIES FOLDER externals/sdl2)
+set_target_properties(uninstall PROPERTIES FOLDER externals/sdl2)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/framework)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/mlt++)
