@@ -18,7 +18,7 @@ if(sys=='Windows'):
     fakeOs="MinGW"
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc --toolchain=msvc')
 else:
-    os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc')
+    os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc --disable-iconv')
 #compile ffmpeg to generate necessary files
 os.system('make')
 
