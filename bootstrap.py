@@ -19,6 +19,8 @@ if(sys=='Windows'):
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc --toolchain=msvc')
 else:
     os.system('sh ./configure --enable-shared --disable-static --disable-programs --disable-asm --disable-postproc')
+#compile ffmpeg to generate necessary files
+os.system('make')
 
 os.chdir(root)
 
