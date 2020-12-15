@@ -1,18 +1,18 @@
 [submodule "externals/ffmpeg"]
 	path = externals/ffmpeg
-	url = git@github.com:FFmpeg/FFmpeg.git
+	url = https://github.com/puzhiguang/FFmpeg.git
 [submodule "externals/sdl2"]
 	path = externals/sdl2
-	url = git@github.com:spurious/SDL-mirror.git
+	url = https://github.com/puzhiguang/SDL-mirror.git
 [submodule "externals/frei0r"]
 	path = externals/frei0r
-	url = git@github.com:dyne/frei0r.git
+	url = https://github.com/puzhiguang/frei0r.git
 [submodule "externals/dlfcn-win32"]
 	path = externals/dlfcn-win32
-	url = git@github.com:gandalfliang/dlfcn-win32.git
+	url = https://github.com/puzhiguang/dlfcn-win32.git
 [submodule "externals/pthread-win32"]
 	path = externals/pthread-win32
-	url = git@github.com:gandalfliang/pthread-win32.git
+	url = https://github.com/puzhiguang/pthread-win32.git
 [submodule "externals/libiconv"]
 	path = externals/libiconv
-	url = git@github.com:gandalfliang/libiconv.git
+	url = https://github.com/puzhiguang/libiconv.git
